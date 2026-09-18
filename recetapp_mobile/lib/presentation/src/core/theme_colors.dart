@@ -17,4 +17,9 @@ abstract class RecetappThemeColors {
   static const Color error = accent;
   static const Color onPrimary = Colors.white;
   static const Color textPrimary = darkGreen;
+
+  // Grises
+  static const Color grey300 = Color(0xFFC7C7C7);
+  static const Color doveGray = Color(0xFF666666);
+  static const Color dustyGray = Color(0xFF999999);
 }

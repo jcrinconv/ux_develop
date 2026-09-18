@@ -7,4 +7,8 @@ export 'src/routes/navigation_service.dart';
 export 'src/routes/routes.dart';
 export 'src/screens/home_screen/home_screen.dart';
 export 'src/screens/not_found_screen/not_found_screen.dart';
+export 'src/screens/scan_prescription_screen/scan_prescription_screen.dart';
 export 'src/utils/bundle.dart';
+export 'src/utils/date_formatting.dart';
+export 'src/widgets/common/recetapp_background.dart';
+export 'src/widgets/widgets.dart';
