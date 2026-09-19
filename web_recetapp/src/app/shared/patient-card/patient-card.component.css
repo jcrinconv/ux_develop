@@ -1,0 +1,98 @@
+:host {
+  display: block;
+}
+
+.card {
+  --accent: var(--Orange);
+  --accent-soft: var(--Light-orange);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 300px;
+  padding: 28px 28px 40px;
+  border: 1px solid var(--Light-green);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--Dark-green);
+}
+
+.card.green {
+  --accent: var(--green);
+  --accent-soft: var(--Light-green);
+}
+
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--Divider);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-text);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.card-head h3 {
+  margin: 6px 0 14px;
+}
+
+.pill {
+  display: block;
+  width: 62px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+}
+
+.meds {
+  flex: 1;
+  margin: 0;
+  padding: 22px 0 0;
+  list-style: none;
+}
+
+.meds li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.med-name {
+  flex: 1;
+}
+
+.dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.detail {
+  align-self: flex-start;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: pre;
+}
+
+.detail:hover {
+  text-decoration: underline;
+}
