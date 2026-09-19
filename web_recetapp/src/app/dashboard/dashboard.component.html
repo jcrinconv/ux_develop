@@ -1,102 +1,50 @@
-<div class="page">
-  <main class="main">
-    <h1 class="logo">
-      <span class="logo-dark">Recet</span><span class="logo-a">A</span><span class="logo-pp">pp</span>
-    </h1>
+<main class="main">
+  <app-logo />
 
-    <section class="add-profile">
-      <div>
-        <h2 class="title text-h2">Gestión de pacientes y recetas</h2>
-        <p class="subtitle text-body1">Consulta, agrega o actualiza la información médica de tus pacientes o la tuya.</p>
-      </div>
-      <button type="button" class="btn btn-orange">
-        <img src="icons/add.svg" alt="" width="24" height="24" />
-        <span class="text-button">Agregar perfil</span>
-      </button>
-    </section>
+  <section class="add-profile">
+    <div>
+      <h2 class="title text-h2">Gestión de pacientes y recetas</h2>
+      <p class="subtitle text-body1">Consulta, agrega o actualiza la información médica de tus pacientes o la tuya.</p>
+    </div>
+    <button type="button" class="btn btn-orange">
+      <img src="icons/add.svg" alt="" width="24" height="24" />
+      <span class="text-button">Agregar perfil</span>
+    </button>
+  </section>
 
-    <label class="search">
-      <input
-        type="search"
-        placeholder="Busca el perfil"
-        aria-label="Buscar perfil"
-        [value]="query()"
-        (input)="query.set($any($event.target).value)"
-      />
-      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
-        <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2" fill="none" />
-        <path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+  <label class="search">
+    <input
+      type="search"
+      placeholder="Busca el perfil"
+      aria-label="Buscar perfil"
+      [value]="query()"
+      (input)="query.set($any($event.target).value)"
+    />
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+      <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2" fill="none" />
+      <path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </svg>
+  </label>
+
+  <section class="carousel">
+    <button type="button" class="arrow" [class.is-hidden]="!canPrev()" aria-label="Anterior" (click)="scroll(-1)">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path d="m15 5-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
       </svg>
-    </label>
+    </button>
 
-    <section class="carousel">
-      <button type="button" class="arrow" [class.is-hidden]="!canPrev()" aria-label="Anterior" (click)="scroll(-1)">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <path d="m15 5-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-        </svg>
-      </button>
-
-      <div class="track" #track (scroll)="updateArrows()">
-        @for (p of filtered(); track p.id) {
-          <article class="card" [class.green]="p.color === 'green'">
-            <header class="card-head">
-              <span class="avatar">{{ p.name[0] }}</span>
-              <div>
-                <h3 class="text-subheading-bold">{{ p.name }}</h3>
-                <span class="pill">{{ p.age }} años</span>
-              </div>
-            </header>
-
-            <ul class="meds text-body2">
-              @for (m of p.medications; track m.name) {
-                <li>
-                  <span class="dot"></span>
-                  <span class="med-name">{{ m.name }}</span>
-                  <span>{{ m.every }}</span>
-                </li>
-              }
-            </ul>
-
-            <button type="button" class="detail text-body2-bold">Ver detalle  →</button>
-          </article>
-        } @empty {
-          <p class="empty">No se encontraron perfiles.</p>
-        }
-      </div>
-
-      <button type="button" class="arrow" [class.is-hidden]="!canNext()" aria-label="Siguiente" (click)="scroll(1)">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-        </svg>
-      </button>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <a class="settings text-body2" href="#">
-      <img src="icons/settings.svg" alt="" />
-      Configuraciones
-    </a>
-
-    <nav class="legal">
-      <a class="text-link" href="#">Acerca de nosotros</a>
-      <a class="text-link" href="#">Terminos y condiciones</a>
-    </nav>
-
-    <div class="footer-group">
-      <p class="text-body2">Descarganos en tu celular</p>
-      <div class="icons icons-apps">
-        <a href="#" aria-label="Google Play"><img src="icons/google-play.svg" alt="" /></a>
-        <a href="#" aria-label="App Store"><img src="icons/app-store.svg" alt="" /></a>
-      </div>
+    <div class="track" #track (scroll)="updateArrows()">
+      @for (p of filtered(); track p.id) {
+      <app-patient-card [patient]="p" />
+    } @empty {
+        <p class="empty">No se encontraron perfiles.</p>
+      }
     </div>
 
-    <div class="footer-group">
-      <p class="text-body2">Nuestras redes sociales</p>
-      <div class="icons icons-social">
-        <a href="#" aria-label="Facebook"><img src="icons/facebook.svg" alt="" /></a>
-        <a href="#" aria-label="Instagram"><img src="icons/instagram.svg" alt="" /></a>
-      </div>
-    </div>
-  </footer>
-</div>
+    <button type="button" class="arrow" [class.is-hidden]="!canNext()" aria-label="Siguiente" (click)="scroll(1)">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      </svg>
+    </button>
+  </section>
+</main>

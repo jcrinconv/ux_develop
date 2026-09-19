@@ -5,6 +5,11 @@
   --Light-gray: #F5FBF9;
   --Light-green: #9FE8D6;
   --Divider: #ededed;
+  --Grey40: #a3a3a3;
+  --Grey-text: #999999;
+  --Body-gray: #3d3d3d;
+  --Border-gray: #d9d9d9;
+  --Tab-gray: #e0e0e0;
   --green: #0E9A82;
   --green-soft: #a8e3d6;
   --bg: #eef5f4;
@@ -88,6 +93,15 @@ button {
   letter-spacing: 0;
 }
 
+.text-label {
+  font-family: var(--font-text);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
 .text-link {
   font-family: var(--font-text);
   font-size: 14px;
@@ -142,5 +156,14 @@ button {
 }
 
 .btn-orange:hover {
+  filter: brightness(0.95);
+}
+
+.btn-green {
+  background: var(--green);
+  color: #fff;
+}
+
+.btn-green:hover {
   filter: brightness(0.95);
 }

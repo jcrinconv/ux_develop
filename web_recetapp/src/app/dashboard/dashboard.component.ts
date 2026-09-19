@@ -1,20 +1,11 @@
-import { afterRenderEffect, Component, computed, ElementRef, signal, viewChild } from '@angular/core';
-
-interface Medication {
-  name: string;
-  every: string;
-}
-
-interface Patient {
-  id: number;
-  name: string;
-  age: number;
-  color: 'coral' | 'green';
-  medications: Medication[];
-}
+import { afterRenderEffect, Component, computed, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { LogoComponent } from '../shared/logo/logo.component';
+import { PatientCardComponent } from '../shared/patient-card/patient-card.component';
+import { PatientsService } from '../services/patients/patients.service';
 
 @Component({
   selector: 'app-dashboard',
+  imports: [LogoComponent, PatientCardComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   host: { '(window:resize)': 'updateArrows()' },
@@ -27,12 +18,7 @@ export class DashboardComponent {
 
   protected readonly query = signal('');
 
-  protected readonly patients = signal<Patient[]>([
-    { id: 1, name: 'Joaquin Perez', age: 33, color: 'green', medications: [{ name: 'Levotiroxina', every: '8hrs' }, { name: 'Acetaminofen', every: '12hrs' }] },
-    { id: 2, name: 'Federico Perez', age: 80, color: 'coral', medications: [{ name: 'Naproxeno', every: '12hrs' }] },
-    { id: 3, name: 'Sandra Hernandez', age: 25, color: 'green', medications: [{ name: 'Propanolol', every: '12hrs' }] },
-    { id: 4, name: 'Camilo Jaimes', age: 43, color: 'coral', medications: [{ name: 'Azitromicina', every: '12hrs' }] },
-  ]);
+  protected readonly patients = inject(PatientsService).patients;
 
   protected readonly filtered = computed(() => {
     const q = this.query().trim().toLowerCase();

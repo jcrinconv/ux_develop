@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Patient } from '../../patients/patients.service';
+import { Patient } from '../../services/patients/patients.service';
 
 @Component({
   selector: 'app-patient-card',
