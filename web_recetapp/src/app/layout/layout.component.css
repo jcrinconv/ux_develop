@@ -1,0 +1,10 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--Light-gray) url('/images/bg-texture.svg') center top / cover no-repeat;
+}
+
+.content {
+  flex: 1;
+}
