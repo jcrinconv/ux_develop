@@ -1,0 +1,141 @@
+<main class="main">
+  @if (patient(); as p) {
+    <div class="profile" data-menu>
+      <button
+        type="button"
+        class="chip text-label"
+        aria-haspopup="menu"
+        [attr.aria-expanded]="profileOpen()"
+        (click)="toggleProfile()"
+      >
+        {{ firstName() }}
+        <img src="icons/chevron-down.svg" alt="" />
+      </button>
+
+      @if (profileOpen()) {
+        <div class="dropdown text-body2" role="menu">
+          <button type="button" role="menuitem" (click)="closeMenus()">Editar perfil</button>
+          <button type="button" role="menuitem" (click)="closeMenus()">Eliminar</button>
+        </div>
+      }
+    </div>
+
+    <app-logo />
+
+    <nav class="breadcrumb text-body2-bold" aria-label="Breadcrumb">
+      <a routerLink="/dashboard">Perfiles</a> / <span>{{ p.name }}</span> / <span>{{ tab() === 'historial' ? 'Historial' : 'Tratamientos' }}</span>
+    </nav>
+
+    <div class="detail-grid">
+      <nav class="pager text-label" aria-label="Perfil anterior o siguiente">
+        @if (prev(); as prevPatient) {
+          <a [routerLink]="['/pacientes', prevPatient.id, 'tratamientos']">‹  Anterior perfil</a>
+        } @else {
+          <span class="off">‹  Anterior perfil</span>
+        }
+        @if (next(); as nextPatient) {
+          <a [routerLink]="['/pacientes', nextPatient.id, 'tratamientos']">Siguiente perfil  ›</a>
+        } @else {
+          <span class="off">Siguiente perfil  ›</span>
+        }
+      </nav>
+
+      <div class="tabs-row">
+        <div class="tabs" role="tablist">
+          <button
+            type="button"
+            role="tab"
+            class="tab"
+            [class.active]="tab() === 'tratamientos'"
+            [attr.aria-selected]="tab() === 'tratamientos'"
+            (click)="tab.set('tratamientos')"
+          >
+            Tratamientos
+          </button>
+          <button
+            type="button"
+            role="tab"
+            class="tab"
+            [class.active]="tab() === 'historial'"
+            [attr.aria-selected]="tab() === 'historial'"
+            (click)="tab.set('historial')"
+          >
+            Historial
+          </button>
+        </div>
+        @if (tab() === 'historial') {
+          <button type="button" class="btn btn-green" (click)="download(p)">
+            <span class="text-button">Descargar</span>
+          </button>
+        }
+      </div>
+
+      <app-patient-card class="patient" [patient]="p" [showDetail]="false" />
+
+      <section class="panel" role="tabpanel">
+        <table class="treatments">
+          <colgroup>
+            <col class="c-actions" />
+            <col class="c-name" />
+            <col class="c-dose" />
+            <col class="c-qty" />
+            <col class="c-start" />
+            <col class="c-end" />
+            <col />
+          </colgroup>
+          <thead class="text-label">
+            <tr>
+              <th scope="col"><span class="sr-only">Acciones</span></th>
+              <th scope="col">Tratamiento</th>
+              <th scope="col">Dosis</th>
+              <th scope="col">Cant. dosis a tomar</th>
+              <th scope="col">Fecha inicio toma</th>
+              <th scope="col">Fecha fin toma</th>
+              <th scope="col">Dosis disponibles</th>
+            </tr>
+          </thead>
+          <tbody class="text-body2">
+            @for (t of p.treatments; track t.id) {
+              <tr>
+                <td class="row-actions" data-menu>
+                  @if (tab() === 'tratamientos') {
+                    <button
+                      type="button"
+                      class="kebab text-label"
+                      aria-haspopup="menu"
+                      aria-label="Opciones de {{ t.name }}"
+                      [attr.aria-expanded]="openRow() === t.id"
+                      (click)="toggleRow(t.id)"
+                    >
+                      ⋮
+                    </button>
+                    @if (openRow() === t.id) {
+                      <div class="row-menu text-body2" role="menu">
+                        <button type="button" role="menuitem" (click)="closeMenus()">Editar tratamiento</button>
+                      </div>
+                    }
+                  }
+                </td>
+                <th scope="row" class="name text-body2-bold">{{ t.name }}</th>
+                <td>{{ t.dose }}</td>
+                <td>{{ t.quantity }}</td>
+                <td>{{ formatDate(t.start) }}</td>
+                <td>{{ formatDate(t.end) }}</td>
+                <td [class.low]="isLow(t.available)">{{ t.available }} dosis</td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="7" class="empty">Este perfil no tiene tratamientos.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </section>
+    </div>
+  } @else {
+    <app-logo />
+    <p class="text-body1 not-found">
+      No encontramos este perfil. <a routerLink="/dashboard">Volver a perfiles</a>
+    </p>
+  }
+</main>
