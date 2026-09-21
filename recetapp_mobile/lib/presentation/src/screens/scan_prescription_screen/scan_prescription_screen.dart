@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:recetapp_mobile/dependencies_injection/locator.dart';
 import 'package:recetapp_mobile/presentation/presentation.dart';
 
 const scanPrescriptionScreenRoute = '/scanPrescriptionScreenRoute';
@@ -13,6 +14,8 @@ class ScanPrescriptionScreen extends StatefulWidget {
 }
 
 class _ScanPrescriptionScreenState extends State<ScanPrescriptionScreen> with WidgetsBindingObserver {
+  final navigationService = locator<NavigationService>();
+
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
   String? _error;
@@ -130,7 +133,7 @@ class _ScanPrescriptionScreenState extends State<ScanPrescriptionScreen> with Wi
                     label: 'Ingresar manualmente',
                     variant: RecetappButtonVariant.text,
                     color: RecetappThemeColors.primary,
-                    onPressed: () {},
+                    onPressed: () => navigationService.navigateToNamedRemoveCurrent(prescriptionDetailsScreenRoute),
                   ),
                 ),
               ],

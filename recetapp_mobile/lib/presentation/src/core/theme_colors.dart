@@ -22,4 +22,5 @@ abstract class RecetappThemeColors {
   static const Color grey300 = Color(0xFFC7C7C7);
   static const Color doveGray = Color(0xFF666666);
   static const Color dustyGray = Color(0xFF999999);
+  static const Color mineShaft = Color(0xFF3D3D3D);
 }

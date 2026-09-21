@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recetapp_mobile/presentation/presentation.dart';
 
 /// Grupo de opciones tipo "chip" de selección única (ej. Hoy / Mañana / fecha).
@@ -15,15 +16,13 @@ class RecetappChoiceChips extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (label != null) ...[
-          Text(label!, style: RecetappTextStyles.formLabel),
-          const SizedBox(height: 8),
-        ],
+        if (label != null) ...[Text(label!, style: RecetappTextStyles.formLabel), SizedBox(height: 4.h)],
         Wrap(
-          spacing: 12,
-          runSpacing: 12,
+          spacing: 10.w,
+          runSpacing: 10.w,
           children: [
-            for (final option in options) _RecetappChoiceChip(label: option, isSelected: option == selected, onTap: () => onChanged(option)),
+            for (final option in options)
+              _RecetappChoiceChip(label: option, isSelected: option == selected, onTap: () => onChanged(option)),
           ],
         ),
       ],
@@ -42,15 +41,20 @@ class _RecetappChoiceChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(8.r),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
         decoration: BoxDecoration(
           color: isSelected ? RecetappThemeColors.primary : Colors.white,
           border: Border.all(color: RecetappThemeColors.primary),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8.r),
         ),
-        child: Text(label, style: RecetappTextStyles.body1Bold.copyWith(color: isSelected ? RecetappThemeColors.onPrimary : RecetappThemeColors.primary)),
+        child: Text(
+          label,
+          style: RecetappTextStyles.body1Bold.copyWith(
+            color: isSelected ? RecetappThemeColors.onPrimary : RecetappThemeColors.primary,
+          ),
+        ),
       ),
     );
   }

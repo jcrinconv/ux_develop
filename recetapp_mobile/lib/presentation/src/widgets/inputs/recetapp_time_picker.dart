@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recetapp_mobile/presentation/presentation.dart';
 
 /// Selector de hora: etiqueta + tres cajas (hora, minuto, am/pm), cada una
@@ -35,15 +36,33 @@ class RecetappTimePicker extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: RecetappTextStyles.formLabel),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RecetappDropdownField(value: hour, options: hours, onChanged: onHourChanged),
-            const SizedBox(width: 12),
-            RecetappDropdownField(value: minute, options: minutes, onChanged: onMinuteChanged),
-            const SizedBox(width: 12),
-            RecetappDropdownField(value: period, options: periods, onChanged: onPeriodChanged),
+            RecetappDropdownField(
+              value: hour,
+              options: hours,
+              onChanged: onHourChanged,
+              width: 75.w,
+              internalPadding: EdgeInsets.only(left: 14.w, top: 10.h, bottom: 10.h, right: 5.w),
+            ),
+            SizedBox(width: 8.w),
+            RecetappDropdownField(
+              value: minute,
+              options: minutes,
+              onChanged: onMinuteChanged,
+              width: 75.w,
+              internalPadding: EdgeInsets.only(left: 14.w, top: 10.h, bottom: 10.h, right: 5.w),
+            ),
+            SizedBox(width: 8.w),
+            RecetappDropdownField(
+              value: period,
+              options: periods,
+              onChanged: onPeriodChanged,
+              width: 80.w,
+              internalPadding: EdgeInsets.only(left: 14.w, top: 10.h, bottom: 10.h, right: 5.w),
+            ),
           ],
         ),
       ],
