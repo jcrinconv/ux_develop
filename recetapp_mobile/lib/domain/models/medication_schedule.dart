@@ -1,11 +1,37 @@
-/// Día en que inicia el tratamiento de un medicamento agendado.
+const _spanishMonthsCapitalized = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
+];
+
+/// Día en que inicia el tratamiento de un medicamento agendado. El de
+/// pasado mañana no tiene una etiqueta fija: se calcula con la fecha
+/// actual, ej. "23/Agosto".
 enum MedicationStartDay {
-  today('Hoy'),
-  tomorrow('Mañana');
+  today,
+  tomorrow,
+  dayAfterTomorrow;
 
-  const MedicationStartDay(this.label);
-
-  final String label;
+  String get label {
+    switch (this) {
+      case MedicationStartDay.today:
+        return 'Hoy';
+      case MedicationStartDay.tomorrow:
+        return 'Mañana';
+      case MedicationStartDay.dayAfterTomorrow:
+        final date = DateTime.now().add(const Duration(days: 2));
+        return '${date.day}/${_spanishMonthsCapitalized[date.month - 1]}';
+    }
+  }
 
   static MedicationStartDay fromLabel(String label) =>
       MedicationStartDay.values.firstWhere((day) => day.label == label, orElse: () => MedicationStartDay.today);

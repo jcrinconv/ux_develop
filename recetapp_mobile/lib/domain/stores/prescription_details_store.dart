@@ -11,7 +11,10 @@ final prescriptionPresentationOptions = [
   prescriptionPresentationPlaceholder,
   for (final presentation in MedicationPresentation.values) presentation.label,
 ];
-const prescriptionStartDayOptions = ['Hoy', 'Mañana'];
+
+/// La etiqueta de "pasado mañana" depende de la fecha actual, así que estas
+/// opciones se recalculan en cada acceso en lugar de fijarse una sola vez.
+List<String> get prescriptionStartDayOptions => [for (final day in MedicationStartDay.values) day.label];
 
 const _defaultDoseCaption = 'Ej. 500 mg';
 const _defaultDoseQuantityCaption = 'Unidades';
@@ -51,7 +54,7 @@ abstract class _PrescriptionDetailsStore with Store {
   String presentation = prescriptionPresentationPlaceholder;
 
   @observable
-  String startDay = prescriptionStartDayOptions.last;
+  String startDay = MedicationStartDay.tomorrow.label;
 
   @observable
   String hour = '09';

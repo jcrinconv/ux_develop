@@ -29,10 +29,7 @@ class _PrescriptionDetailsScreenState extends State<PrescriptionDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    _store = PrescriptionDetailsStore(
-      locator<ScheduledMedicationsStore>(),
-      initialMedication: widget.initialMedication,
-    );
+    _store = PrescriptionDetailsStore(locator<ScheduledMedicationsStore>(), initialMedication: widget.initialMedication);
   }
 
   @override
@@ -41,9 +38,9 @@ class _PrescriptionDetailsScreenState extends State<PrescriptionDetailsScreen> {
     super.dispose();
   }
 
-  void _onAcceptPressed() {
+  void _onAcceptPressed() async {
     if (_store.submit()) {
-      navigationService.navigateToNamedRouteNoBackStack(homeScreenRoute);
+      await showPrescriptionCreatedDialog();
     }
   }
 

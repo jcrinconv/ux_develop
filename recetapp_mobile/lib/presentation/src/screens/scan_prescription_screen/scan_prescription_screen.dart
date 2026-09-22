@@ -2,9 +2,29 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recetapp_mobile/dependencies_injection/locator.dart';
+import 'package:recetapp_mobile/domain/models/medication_schedule.dart';
 import 'package:recetapp_mobile/presentation/presentation.dart';
 
 const scanPrescriptionScreenRoute = '/scanPrescriptionScreenRoute';
+
+/// Datos de ejemplo con los que se "prellena" el formulario cuando el
+/// escaneo simulado tiene éxito, para dar la ilusión de que se reconoció
+/// una receta real. Cuando exista reconocimiento (OCR) de verdad, esta
+/// función se reemplaza por los datos extraídos de la foto.
+MedicationSchedule _buildScannedMedication() => MedicationSchedule(
+  id: DateTime.now().microsecondsSinceEpoch.toString(),
+  name: 'Amoxicilina',
+  presentation: 'Cápsula',
+  dose: '500 mg',
+  doseQuantity: 1,
+  treatmentDurationDays: 7,
+  hoursBetweenDoses: 8,
+  startDay: MedicationStartDay.today,
+  hour: '08',
+  minute: '00',
+  period: 'am',
+  availableDoses: 21,
+);
 
 class ScanPrescriptionScreen extends StatefulWidget {
   const ScanPrescriptionScreen({super.key});
@@ -15,6 +35,7 @@ class ScanPrescriptionScreen extends StatefulWidget {
 
 class _ScanPrescriptionScreenState extends State<ScanPrescriptionScreen> with WidgetsBindingObserver {
   final navigationService = locator<NavigationService>();
+  int counter = 0;
 
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
@@ -80,16 +101,6 @@ class _ScanPrescriptionScreenState extends State<ScanPrescriptionScreen> with Wi
     super.dispose();
   }
 
-  Future<void> _takePicture() async {
-    final controller = _controller;
-    if (controller == null || !controller.value.isInitialized || controller.value.isTakingPicture) return;
-    await controller.takePicture();
-    // TODO: enviar la foto capturada a reconocimiento (OCR) y precargar
-    // PrescriptionDetailsScreen con los datos extraídos de la receta.
-    if (!mounted) return;
-    navigationService.navigateToNamedRemoveCurrent(prescriptionDetailsScreenRoute);
-  }
-
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) => _measureFrame());
@@ -128,7 +139,18 @@ class _ScanPrescriptionScreenState extends State<ScanPrescriptionScreen> with Wi
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 29.h, bottom: 14.h),
-                  child: _ShutterButton(onTap: _takePicture),
+                  child: _ShutterButton(
+                    onTap: () async {
+                      setState(() => counter += 1);
+                      if (counter > 1) {
+                        navigationService.navigateToPageRemoveCurrent(
+                          PrescriptionDetailsScreen(initialMedication: _buildScannedMedication()),
+                        );
+                      } else {
+                        await showFailedPrescriptionScanning();
+                      }
+                    },
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 43.h),

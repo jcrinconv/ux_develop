@@ -61,7 +61,7 @@ class RecetappTextField extends StatelessWidget {
                 style: RecetappTextStyles.body1,
                 decoration: InputDecoration(
                   hintText: hintText,
-                  hintStyle: RecetappTextStyles.body1.copyWith(color: RecetappThemeColors.mint),
+                  hintStyle: RecetappTextStyles.hint.copyWith(color: RecetappThemeColors.dustyGray),
                   filled: true,
                   fillColor: Colors.white,
                   suffixIcon: suffixIcon,
