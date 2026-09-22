@@ -18,15 +18,17 @@ dependencies:
   get_it: ^9.2.1
   google_fonts: ^6.2.1
   flutter_svg: ^2.3.0
+  mobx: ^2.6.1
+  flutter_mobx: ^2.3.0
 
 dev_dependencies:
   build_runner: ^2.4.8
   flutter_lints: ^6.0.0
-  build_resolvers: ^2.4.2
   flutter_test:
     sdk: flutter
   mobx_codegen: ^2.6.0
-  retrofit_generator: ^8.0.0
+  # Pinned: >=10.2.10 requires meta ^1.18.3, newer than the meta version pinned by the Flutter SDK.
+  retrofit_generator: ">=10.2.6 <10.2.10"
 
 flutter:
   uses-material-design: true

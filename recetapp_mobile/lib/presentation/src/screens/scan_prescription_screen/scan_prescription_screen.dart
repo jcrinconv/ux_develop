@@ -84,7 +84,10 @@ class _ScanPrescriptionScreenState extends State<ScanPrescriptionScreen> with Wi
     final controller = _controller;
     if (controller == null || !controller.value.isInitialized || controller.value.isTakingPicture) return;
     await controller.takePicture();
-    // TODO: navegar a la pantalla de confirmación con la foto capturada.
+    // TODO: enviar la foto capturada a reconocimiento (OCR) y precargar
+    // PrescriptionDetailsScreen con los datos extraídos de la receta.
+    if (!mounted) return;
+    navigationService.navigateToNamedRemoveCurrent(prescriptionDetailsScreenRoute);
   }
 
   @override
