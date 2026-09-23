@@ -1,0 +1,23 @@
+<article class="card" [class.green]="patient().color === 'green'">
+  <header class="card-head">
+    <span class="avatar">{{ patient().name[0] }}</span>
+    <div>
+      <h3 class="text-subheading-bold">{{ patient().name }}</h3>
+      <span class="pill">{{ patient().age }} años</span>
+    </div>
+  </header>
+
+  <ul class="meds text-body2">
+    @for (m of patient().medications; track m.name) {
+      <li>
+        <span class="dot"></span>
+        <span class="med-name">{{ m.name }}</span>
+        <span>{{ m.every }}</span>
+      </li>
+    }
+  </ul>
+
+  @if (showDetail()) {
+    <a class="detail text-body2-bold" [routerLink]="['/pacientes', patient().id, 'tratamientos']">Ver detalle  →</a>
+  }
+</article>

@@ -1,0 +1,303 @@
+:host {
+  display: block;
+}
+
+.main {
+  position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 52px 73px 52px 100px;
+}
+
+app-logo {
+  margin-bottom: 38px;
+}
+
+.breadcrumb {
+  margin-bottom: 46px;
+}
+
+.breadcrumb a,
+.breadcrumb span {
+  color: var(--Dark-green);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.not-found a {
+  color: var(--green);
+}
+
+/* Profile chip + dropdown */
+.profile {
+  position: absolute;
+  top: 33px;
+  right: 73px;
+  z-index: 10;
+  width: 183px;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 42px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--Orange);
+  color: #fff;
+}
+
+.chip:hover {
+  filter: brightness(0.95);
+}
+
+.dropdown {
+  position: absolute;
+  top: 49px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--Border-gray);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.dropdown button,
+.row-menu button {
+  display: block;
+  width: 100%;
+  height: 42px;
+  padding: 0 10px;
+  border: 0;
+  background: #fff;
+  color: var(--Body-gray);
+  text-align: left;
+}
+
+.dropdown button + button {
+  border-top: 1px solid var(--Border-gray);
+}
+
+.dropdown button:hover,
+.row-menu button:hover {
+  background: var(--Light-gray);
+}
+
+/* Toolbar (pager + tabs) and content */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 326px 1fr;
+  grid-template-areas:
+    'pager tabs'
+    'patient panel';
+  column-gap: 60px;
+  row-gap: 26px;
+  align-items: start;
+}
+
+.pager {
+  grid-area: pager;
+  display: flex;
+  align-self: center;
+  padding-top: 6px;
+  justify-content: space-between;
+  width: 325px;
+}
+
+.pager > * {
+  color: var(--green);
+  text-decoration: none;
+  white-space: pre;
+}
+
+.pager a:hover {
+  text-decoration: underline;
+}
+
+.pager .off {
+  color: var(--Grey40);
+}
+
+.tabs-row {
+  grid-area: tabs;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.tabs {
+  display: flex;
+  gap: 30px;
+  padding-left: 9px;
+}
+
+.tab {
+  position: relative;
+  width: 140px;
+  height: 40px;
+  padding: 12px 0 0;
+  border: 0;
+  background: none;
+  color: var(--Grey-text);
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--Tab-gray);
+}
+
+.tab.active {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.tab.active::after {
+  background: var(--green);
+}
+
+.patient {
+  grid-area: patient;
+}
+
+/* Treatments table */
+.panel {
+  grid-area: panel;
+  min-height: 215px;
+  padding: 23px 22px 51px 31px;
+  overflow-x: auto;
+  border: 1px solid var(--Border-gray);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--Dark-green);
+}
+
+.treatments {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.c-actions { width: 25px; }
+.c-name, .c-qty, .c-start, .c-end { width: 145px; }
+.c-dose { width: 100px; }
+
+.treatments th,
+.treatments td {
+  padding: 0 12px 0 0;
+  text-align: left;
+}
+
+.treatments thead th {
+  height: 40px;
+  vertical-align: top;
+}
+
+.treatments tbody th,
+.treatments tbody td {
+  height: 50px;
+  vertical-align: middle;
+  color: var(--Body-gray);
+}
+
+.treatments tbody th.name {
+  color: var(--Dark-green);
+}
+
+.treatments tbody tr:not(:last-child) > :not(.row-actions) {
+  border-bottom: 1px solid var(--Border-gray);
+}
+
+.treatments td.low {
+  color: var(--Orange);
+  font-weight: 700;
+}
+
+.row-actions {
+  position: relative;
+}
+
+.kebab {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--Grey-text);
+}
+
+.row-menu {
+  position: absolute;
+  top: 23px;
+  left: 8px;
+  z-index: 5;
+  width: 180px;
+  overflow: hidden;
+  border: 1px solid var(--Border-gray);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.empty {
+  margin: 0;
+  color: var(--Body-gray);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'pager'
+      'patient'
+      'tabs'
+      'panel';
+  }
+
+  .patient {
+    max-width: 326px;
+  }
+
+  .tabs {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .main {
+    padding: 32px 16px 48px;
+  }
+
+  .profile {
+    position: static;
+    margin: 0 0 0px auto;
+  }
+
+  app-logo {
+    margin-bottom: 24px;
+  }
+}

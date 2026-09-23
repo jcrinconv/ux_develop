@@ -1,0 +1,50 @@
+<main class="main">
+  <app-logo />
+
+  <section class="add-profile">
+    <div>
+      <h2 class="title text-h2">Gestión de pacientes y recetas</h2>
+      <p class="subtitle text-body1">Consulta, agrega o actualiza la información médica de tus pacientes o la tuya.</p>
+    </div>
+    <button type="button" class="btn btn-orange">
+      <img src="icons/add.svg" alt="" width="24" height="24" />
+      <span class="text-button">Agregar perfil</span>
+    </button>
+  </section>
+
+  <label class="search">
+    <input
+      type="search"
+      placeholder="Busca el perfil"
+      aria-label="Buscar perfil"
+      [value]="query()"
+      (input)="query.set($any($event.target).value)"
+    />
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+      <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2" fill="none" />
+      <path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </svg>
+  </label>
+
+  <section class="carousel">
+    <button type="button" class="arrow" [class.is-hidden]="!canPrev()" aria-label="Anterior" (click)="scroll(-1)">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path d="m15 5-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      </svg>
+    </button>
+
+    <div class="track" #track (scroll)="updateArrows()">
+      @for (p of filtered(); track p.id) {
+      <app-patient-card [patient]="p" />
+    } @empty {
+        <p class="empty">No se encontraron perfiles.</p>
+      }
+    </div>
+
+    <button type="button" class="arrow" [class.is-hidden]="!canNext()" aria-label="Siguiente" (click)="scroll(1)">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      </svg>
+    </button>
+  </section>
+</main>

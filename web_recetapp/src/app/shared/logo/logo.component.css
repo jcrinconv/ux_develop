@@ -1,0 +1,27 @@
+:host {
+  display: block;
+  width: fit-content;
+}
+
+.logo {
+  display: block;
+  text-decoration: none;
+  font-family: var(--font-logo);
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: 3.6px;
+  color: var(--Dark-green);
+  -webkit-text-stroke: 1px var(--Light-gray);
+}
+
+.logo-dark,
+.logo-pp {
+  letter-spacing: 1.6px;
+}
+
+.logo-a,
+.logo-pp {
+  color: var(--Orange);
+}
