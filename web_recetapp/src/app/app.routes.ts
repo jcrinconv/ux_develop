@@ -16,6 +16,16 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./tratamientos/tratamientos.component').then((m) => m.TratamientosComponent),
       },
+      {
+        path: 'pacientes/nuevo',
+        loadComponent: () =>
+          import('./crear_editar_perfil/crear_editar_perfil.component').then((m) => m.CrearEditarPerfilComponent),
+      },
+      {
+        path: 'pacientes/:id/editar',
+        loadComponent: () =>
+          import('./crear_editar_perfil/crear_editar_perfil.component').then((m) => m.CrearEditarPerfilComponent),
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },

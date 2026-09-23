@@ -1,0 +1,67 @@
+<main class="main">
+  <app-logo />
+
+  <nav class="breadcrumb text-body2-bold" aria-label="Breadcrumb">
+    <a routerLink="/dashboard">Perfiles</a> / <span>{{ isEdit() ? 'Editar perfil' : 'Crear perfil' }}</span>
+  </nav>
+
+  @if (notFound()) {
+  <p class="text-body1 not-found">
+    No encontramos este perfil. <a routerLink="/dashboard">Volver a perfiles</a>
+  </p>
+  } @else {
+  <h1 class="title text-h2">{{ isEdit() ? 'Editar perfil' : 'Crear perfil' }}</h1>
+  <p class="subtitle text-body1">Ingresa los datos para configurar el tratamiento de esta persona</p>
+  <p class="note text-body2">Nota: Recuerda que desde la app podrás crear tu plan de tratamiento</p>
+
+  <form class="form" (submit)="onSubmit($event)">
+    <div class="field-row">
+      <label class="field">
+        <span class="label text-body2-bold">Nombre completo</span>
+        <input type="text" name="name" placeholder="Ej. Joaquín Pérez" [value]="name()"
+          (input)="name.set($any($event.target).value)" />
+      </label>
+      <label class="field">
+        <span class="label text-body2-bold">Edad</span>
+        <input type="number" name="age" min="0" placeholder="Ej. 32" [value]="age()"
+          (input)="age.set($any($event.target).value)" />
+      </label>
+    </div>
+
+    <div class="field-row">
+      <label class="field">
+        <span class="label text-body2-bold">Peso (kg)</span>
+        <input type="number" name="weight" min="0" placeholder="Ej. 68" [value]="weight()"
+          (input)="weight.set($any($event.target).value)" />
+      </label>
+      <label class="field">
+        <span class="label text-body2-bold">Altura (cm)</span>
+        <input type="number" name="height" min="0" placeholder="Ej. 170" [value]="height()"
+          (input)="height.set($any($event.target).value)" />
+      </label>
+    </div>
+
+    <label class="field field-full">
+      <span class="label text-body2-bold">Enfermedades pre-existentes</span>
+      <textarea name="diseases" rows="3" placeholder="Ej. Hipertensión, diabetes tipo 2..." [value]="diseases()"
+        (input)="diseases.set($any($event.target).value)"></textarea>
+    </label>
+
+    <label class="field field-full">
+      <span class="label text-body2-bold">Medicamentos tomados con regularidad</span>
+      <textarea name="medicationsNotes" rows="3" placeholder="Ej. Levotiroxina 50mcg cada 8h..."
+        [value]="medicationsNotes()" (input)="medicationsNotes.set($any($event.target).value)"></textarea>
+    </label>
+
+    <div class="actions">
+      <button type="button" class="btn btn-green" [routerLink]="cancelLink()">
+        <span class="text-button">Cancelar</span>
+      </button>
+      <button type="submit" class="btn btn-orange" [disabled]="!name().trim()">
+        <img src="icons/add.svg" alt="" width="24" height="24" />
+        <span class="text-button">{{ isEdit() ? 'Actualizar' : 'Crear perfil' }}</span>
+      </button>
+    </div>
+  </form>
+  }
+</main>

@@ -19,9 +19,22 @@ export interface Patient {
   id: number;
   name: string;
   age: number;
+  weight?: number;
+  height?: number;
+  diseases?: string;
   color: 'coral' | 'green';
   medications: Medication[];
+  medicationsNotes?: string;
   treatments: Treatment[];
+}
+
+export interface PatientFormData {
+  name: string;
+  age: number;
+  weight?: number;
+  height?: number;
+  diseases?: string;
+  medicationsNotes?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -72,4 +85,33 @@ export class PatientsService {
       ],
     },
   ]);
+
+  getPatient(id: number) {
+    return this.patients().find((p) => p.id === id);
+  }
+
+  addPatient(data: PatientFormData): number {
+    const id = Math.max(0, ...this.patients().map((p) => p.id)) + 1;
+    const color: Patient['color'] = id % 2 === 0 ? 'coral' : 'green';
+    this.patients.update((list) => [...list, { id, color, medications: [], treatments: [], ...data }]);
+    return id;
+  }
+
+  updatePatient(id: number, data: PatientFormData) {
+    this.patients.update((list) => list.map((p) => (p.id === id ? { ...p, ...data } : p)));
+  }
+
+  deletePatient(id: number) {
+    this.patients.update((list) => list.filter((p) => p.id !== id));
+  }
+
+  updateTreatment(patientId: number, treatment: Treatment) {
+    this.patients.update((list) =>
+      list.map((p) =>
+        p.id === patientId
+          ? { ...p, treatments: p.treatments.map((t) => (t.id === treatment.id ? treatment : t)) }
+          : p,
+      ),
+    );
+  }
 }

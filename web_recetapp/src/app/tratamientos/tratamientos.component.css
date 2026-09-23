@@ -80,7 +80,7 @@ app-logo {
   text-align: left;
 }
 
-.dropdown button + button {
+.dropdown button+button {
   border-top: 1px solid var(--Border-gray);
 }
 
@@ -110,7 +110,7 @@ app-logo {
   width: 325px;
 }
 
-.pager > * {
+.pager>* {
   color: var(--green);
   text-decoration: none;
   white-space: pre;
@@ -195,9 +195,20 @@ app-logo {
   table-layout: fixed;
 }
 
-.c-actions { width: 25px; }
-.c-name, .c-qty, .c-start, .c-end { width: 145px; }
-.c-dose { width: 100px; }
+.c-actions {
+  width: 25px;
+}
+
+.c-name,
+.c-qty,
+.c-start,
+.c-end {
+  width: 145px;
+}
+
+.c-dose {
+  width: 100px;
+}
 
 .treatments th,
 .treatments td {
@@ -221,7 +232,7 @@ app-logo {
   color: var(--Dark-green);
 }
 
-.treatments tbody tr:not(:last-child) > :not(.row-actions) {
+.treatments tbody tr:not(:last-child)> :not(.row-actions) {
   border-bottom: 1px solid var(--Border-gray);
 }
 
@@ -265,6 +276,124 @@ app-logo {
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* Delete confirmation modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: rgba(12, 38, 34, 0.5);
+}
+
+.modal {
+  width: 100%;
+  max-width: 440px;
+  padding: 16px 28px 28px 30px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--Dark-green);
+}
+
+.modal-title {
+  margin: 0 0 24px;
+}
+
+.modal-confirm .modal-title {
+  text-align: center;
+}
+
+.modal-body {
+  margin: 0 0 14px;
+  color: var(--Body-gray);
+}
+
+.modal-info {
+  margin: 0 0 28px;
+  padding: 10px 23px;
+  border-left: 2px solid var(--green);
+  border-bottom: 2px solid var(--green);
+  border-radius: 8px;
+  background: var(--Light-green);
+  color: var(--Dark-green);
+}
+
+.modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 79px;
+  padding: 0 37px;
+}
+
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--green);
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
+
+/* Edit treatment modal */
+.modal-form {
+  max-width: 480px;
+  padding: 24px 28px 40px;
+}
+
+.modal-form .field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 10px;
+}
+
+.modal-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-form .label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--Dark-green);
+}
+
+.modal-form input {
+  height: 44px;
+  padding: 13px 14px;
+  border: 1.5px solid var(--Light-green);
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  font-family: var(--font-text);
+  font-size: 15px;
+  color: var(--Dark-green);
+  outline: 0;
+}
+
+.modal-form input:focus {
+  border-color: var(--green);
+}
+
+.modal-form .modal-actions {
+  align-items: center;
+  justify-content: center;
+  padding-top: 48px;
+  gap: 39px;
+}
+
+.info-icon {
+  display: inline-flex;
+  color: var(--Grey-text);
+  cursor: help;
 }
 
 /* Responsive */

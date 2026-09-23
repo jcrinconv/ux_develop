@@ -1,11 +1,12 @@
 import { afterRenderEffect, Component, computed, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { LogoComponent } from '../shared/logo/logo.component';
 import { PatientCardComponent } from '../shared/patient-card/patient-card.component';
 import { PatientsService } from '../services/patients/patients.service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [LogoComponent, PatientCardComponent],
+  imports: [RouterLink, LogoComponent, PatientCardComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   host: { '(window:resize)': 'updateArrows()' },

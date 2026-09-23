@@ -1,8 +1,8 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LogoComponent } from '../shared/logo/logo.component';
 import { PatientCardComponent } from '../shared/patient-card/patient-card.component';
-import { Patient, PatientsService } from '../services/patients/patients.service';
+import { Patient, PatientsService, Treatment } from '../services/patients/patients.service';
 
 const MONTHS = [
   'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -18,13 +18,16 @@ const LOW_STOCK = 5;
   styleUrl: './tratamientos.component.css',
   host: {
     '(document:click)': 'closeMenus($event)',
-    '(document:keydown.escape)': 'closeMenus()',
+    '(document:keydown.escape)': 'closeMenus(); closeDeleteConfirm(); closeEditTreatment()',
   },
 })
 export class TratamientosComponent {
   readonly id = input.required<string>();
 
-  private readonly patients = inject(PatientsService).patients;
+  private readonly patientsService = inject(PatientsService);
+  private readonly router = inject(Router);
+
+  private readonly patients = this.patientsService.patients;
 
   private readonly index = computed(() => this.patients().findIndex((p) => p.id === Number(this.id())));
 
@@ -43,6 +46,14 @@ export class TratamientosComponent {
   protected readonly tab = signal<'tratamientos' | 'historial'>('tratamientos');
   protected readonly profileOpen = signal(false);
   protected readonly openRow = signal<number | null>(null);
+  protected readonly deleteConfirmOpen = signal(false);
+  protected readonly editingTreatment = signal<Treatment | null>(null);
+
+  protected readonly doseValue = signal('');
+  protected readonly quantityValue = signal('');
+  protected readonly startValue = signal('');
+  protected readonly endValue = signal('');
+  protected readonly availableValue = signal('');
 
   protected toggleProfile() {
     this.openRow.set(null);
@@ -58,6 +69,50 @@ export class TratamientosComponent {
     if ((event?.target as Element | null)?.closest?.('[data-menu]')) return;
     this.profileOpen.set(false);
     this.openRow.set(null);
+  }
+
+  protected openDeleteConfirm() {
+    this.closeMenus();
+    this.deleteConfirmOpen.set(true);
+  }
+
+  protected closeDeleteConfirm() {
+    this.deleteConfirmOpen.set(false);
+  }
+
+  protected confirmDelete(patient: Patient) {
+    this.patientsService.deletePatient(patient.id);
+    this.deleteConfirmOpen.set(false);
+    this.router.navigate(['/dashboard']);
+  }
+
+  protected openEditTreatment(treatment: Treatment) {
+    this.closeMenus();
+    this.editingTreatment.set(treatment);
+    this.doseValue.set(treatment.dose);
+    this.quantityValue.set(treatment.quantity);
+    this.startValue.set(treatment.start);
+    this.endValue.set(treatment.end ?? '');
+    this.availableValue.set(String(treatment.available));
+  }
+
+  protected closeEditTreatment() {
+    this.editingTreatment.set(null);
+  }
+
+  protected saveTreatment(patient: Patient) {
+    const current = this.editingTreatment();
+    if (!current) return;
+
+    this.patientsService.updateTreatment(patient.id, {
+      ...current,
+      dose: this.doseValue().trim(),
+      quantity: this.quantityValue().trim(),
+      start: this.startValue(),
+      end: this.endValue() || null,
+      available: Number(this.availableValue()) || 0,
+    });
+    this.editingTreatment.set(null);
   }
 
   protected isLow(available: number) {
