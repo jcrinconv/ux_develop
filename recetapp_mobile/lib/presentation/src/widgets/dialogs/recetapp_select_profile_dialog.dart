@@ -37,7 +37,7 @@ class RecetappSelectProfileDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _Header(onClose: () => Navigator.of(context).pop()),
+          RecetappModalHeader(title: 'Seleccionar perfil', onClose: () => Navigator.of(context).pop()),
           SizedBox(height: 16.h),
           for (int i = 0; i < profiles.length; i++) ...[
             if (i > 0) SizedBox(height: 10.h),
@@ -52,40 +52,6 @@ class RecetappSelectProfileDialog extends StatelessWidget {
           _AddProfileButton(onTap: onAddProfile),
         ],
       ),
-    );
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header({required this.onClose});
-
-  final VoidCallback onClose;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Text(
-            'Seleccionar perfil',
-            style: RecetappTextStyles.formLabel.copyWith(color: RecetappThemeColors.darkGreen),
-          ),
-        ),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onClose,
-          child: Padding(
-            padding: EdgeInsets.only(left: 12.w, bottom: 9.h),
-            child: const RecetappStrokeIcon(
-              asset: RecetappIcons.closeIcon,
-              width: 11,
-              height: 11,
-              bleed: Offset(0.75, 0.75),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

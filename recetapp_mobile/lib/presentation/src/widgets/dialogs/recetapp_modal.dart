@@ -27,3 +27,35 @@ class RecetappModal extends StatelessWidget {
     );
   }
 }
+
+class RecetappModalHeader extends StatelessWidget {
+  const RecetappModalHeader({super.key, required this.title, required this.onClose});
+
+  final String title;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Text(title, style: RecetappTextStyles.formLabel.copyWith(color: RecetappThemeColors.darkGreen)),
+        ),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onClose,
+          child: Padding(
+            padding: EdgeInsets.only(left: 12.w, bottom: 9.h),
+            child: const RecetappStrokeIcon(
+              asset: RecetappIcons.closeIcon,
+              width: 11,
+              height: 11,
+              bleed: Offset(0.75, 0.75),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

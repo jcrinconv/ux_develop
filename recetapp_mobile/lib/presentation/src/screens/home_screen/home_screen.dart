@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recetapp_mobile/dependencies_injection/locator.dart';
+import 'package:recetapp_mobile/domain/models/medication_schedule.dart';
 import 'package:recetapp_mobile/domain/stores/scheduled_medications_store.dart';
 import 'package:recetapp_mobile/presentation/presentation.dart';
 import 'package:recetapp_mobile/presentation/src/core/recetapp_resources.dart';
@@ -41,6 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
       subtitle: medication.reminderLabel,
       onTaken: () => _scheduledMedications.toggleTaken(medication.id),
     );
+  }
+
+  Future<void> _onToggleTaken(MedicationSchedule medication) async {
+    if (!medication.taken) {
+      final takenAt = await showConfirmDoseDialog(context, medicationName: medication.name);
+      if (takenAt == null) return;
+    }
+    _scheduledMedications.toggleTaken(medication.id);
   }
 
   @override
@@ -101,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           duration: medication.durationLabel,
                           time: medication.timeLabel,
                           taken: medication.taken,
-                          onToggle: () {},
+                          onToggle: () => _onToggleTaken(medication),
                         );
                       },
                     );

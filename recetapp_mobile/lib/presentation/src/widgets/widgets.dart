@@ -5,6 +5,7 @@ export 'common/recetapp_button.dart';
 export 'common/recetapp_dashed_border.dart';
 export 'common/recetapp_stroke_icon.dart';
 export 'common/recetapp_fab.dart';
+export 'dialogs/recetapp_confirm_dose_dialog.dart';
 export 'dialogs/recetapp_modal.dart';
 export 'dialogs/recetapp_reminder_dialog.dart';
 export 'dialogs/recetapp_select_profile_dialog.dart';
