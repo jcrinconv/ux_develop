@@ -9,41 +9,36 @@ Future<void> showPrescriptionCreatedDialog() async {
 
   if (navigationService.state != null) {
     return await showDialog(
-      barrierColor: Colors.black.withValues(alpha: 0.6),
+      barrierColor: recetappScrimColor,
       context: navigationService.state!.context,
       barrierDismissible: false,
       builder: (_) => PopScope(
         canPop: false,
-        child: Dialog(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(14.r)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: SvgPicture.asset(RecetappIcons.successIcon, height: 50.h),
+        child: RecetappModal(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(alignment: Alignment.center, child: SvgPicture.asset(RecetappIcons.successIcon)),
+              SizedBox(height: 16.h),
+              Text(
+                '¡Alarma creada exitosamente!',
+                style: RecetappTextStyles.formLabel.copyWith(color: RecetappThemeColors.darkGreen),
+              ),
+              SizedBox(height: 16.h),
+              Text(
+                'La alarma para tu receta médica quedó activa. Te avisaremos en cada toma.',
+                style: RecetappTextStyles.body2.copyWith(color: RecetappThemeColors.doveGray),
+              ),
+              SizedBox(height: 16.h),
+              Align(
+                alignment: Alignment.centerRight,
+                child: RecetappButton(
+                  label: 'Aceptar',
+                  onPressed: () => navigationService.navigateToNamedRouteNoBackStack(homeScreenRoute),
                 ),
-                SizedBox(height: 16.h),
-                Text('¡Alarma creada exitosamente!', style: RecetappTextStyles.formLabel),
-                SizedBox(height: 16.h),
-                Text(
-                  'La alarma para tu receta médica quedó activa. Te avisaremos en cada toma.',
-                  style: RecetappTextStyles.body2,
-                ),
-                SizedBox(height: 16.h),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: RecetappButton(
-                    label: 'Aceptar',
-                    onPressed: () => navigationService.navigateToNamedRouteNoBackStack(homeScreenRoute),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

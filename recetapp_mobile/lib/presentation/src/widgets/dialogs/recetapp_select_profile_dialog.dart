@@ -17,7 +17,7 @@ Future<RecetappProfileOption?> showSelectProfileDialog(
 }) {
   return showDialog<RecetappProfileOption>(
     context: context,
-    barrierColor: Colors.black.withValues(alpha: 0.45),
+    barrierColor: recetappScrimColor,
     builder: (context) =>
         RecetappSelectProfileDialog(profiles: profiles, selectedName: selectedName, onAddProfile: onAddProfile),
   );
@@ -32,39 +32,25 @@ class RecetappSelectProfileDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      insetPadding: EdgeInsets.zero,
-      backgroundColor: Colors.white,
-      surfaceTintColor: Colors.transparent,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14.r),
-        side: BorderSide(color: RecetappThemeColors.grey300, width: 1.5),
-      ),
-      child: SizedBox(
-        width: 320.w,
-        child: Padding(
-          padding: EdgeInsets.all(20.w),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _Header(onClose: () => Navigator.of(context).pop()),
-              SizedBox(height: 16.h),
-              for (int i = 0; i < profiles.length; i++) ...[
-                if (i > 0) SizedBox(height: 10.h),
-                RecetappProfileRow(
-                  name: profiles[i].name,
-                  subtitle: profiles[i].subtitle,
-                  selected: profiles[i].name == selectedName,
-                  onTap: () => Navigator.of(context).pop(profiles[i]),
-                ),
-              ],
-              SizedBox(height: 16.h),
-              _AddProfileButton(onTap: onAddProfile),
-            ],
-          ),
-        ),
+    return RecetappModal(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _Header(onClose: () => Navigator.of(context).pop()),
+          SizedBox(height: 16.h),
+          for (int i = 0; i < profiles.length; i++) ...[
+            if (i > 0) SizedBox(height: 10.h),
+            RecetappProfileRow(
+              name: profiles[i].name,
+              subtitle: profiles[i].subtitle,
+              selected: profiles[i].name == selectedName,
+              onTap: () => Navigator.of(context).pop(profiles[i]),
+            ),
+          ],
+          SizedBox(height: 16.h),
+          _AddProfileButton(onTap: onAddProfile),
+        ],
       ),
     );
   }
