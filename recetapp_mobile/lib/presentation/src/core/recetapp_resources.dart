@@ -8,6 +8,7 @@ class RecetappIcons {
   static const userIcon = '${iconsBase}User.svg';
   static const closeIcon = '${iconsBase}Close.svg';
   static const plusIcon = '${iconsBase}Plus.svg';
+  static const bellIcon = '${iconsBase}Bell.svg';
   static const chevronRightWhiteIcon = '${iconsBase}ChevronRightWhite.svg';
   static const chevronRightGreyIcon = '${iconsBase}ChevronRightGrey.svg';
 }

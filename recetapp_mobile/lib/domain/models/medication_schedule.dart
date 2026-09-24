@@ -86,6 +86,12 @@ class MedicationSchedule {
     return '${hour24.toString().padLeft(2, '0')}:$minute';
   }
 
+  String get reminderLabel {
+    final unit = presentation.toLowerCase();
+    final unitLabel = doseQuantity == 1 || unit.endsWith('s') ? unit : '${unit}s';
+    return '$name · $doseQuantity $unitLabel · $hour:$minute ${period.toLowerCase()}';
+  }
+
   MedicationSchedule copyWith({bool? taken}) => MedicationSchedule(
     id: id,
     name: name,

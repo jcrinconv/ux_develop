@@ -31,12 +31,28 @@ class _HomeScreenState extends State<HomeScreen> {
     if (profile != null) setState(() => _profileName = profile.name);
   }
 
+  void _showReminder() {
+    final pending = _scheduledMedications.medications.where((medication) => !medication.taken);
+    if (pending.isEmpty) return;
+    final medication = pending.first;
+    showReminderDialog(
+      context,
+      title: 'Es hora de tu medicamento',
+      subtitle: medication.reminderLabel,
+      onTaken: () => _scheduledMedications.toggleTaken(medication.id),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: RecetappHomeTopBar(profileName: _profileName, onProfileTap: _selectProfile, onNotificationsTap: () {}),
+        appBar: RecetappHomeTopBar(
+          profileName: _profileName,
+          onProfileTap: _selectProfile,
+          onNotificationsTap: _showReminder,
+        ),
         bottomNavigationBar: RecetappBottomNav(
           items: [
             RecetappBottomNavItemData(iconPath: RecetappIcons.packageIcon, label: 'Tratamientos'),
