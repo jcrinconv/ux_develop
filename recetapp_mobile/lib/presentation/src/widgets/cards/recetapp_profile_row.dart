@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recetapp_mobile/presentation/presentation.dart';
 
 /// Fila/tarjeta de perfil (persona o mascota) con nombre, subtítulo y chevron.
@@ -13,33 +14,53 @@ class RecetappProfileRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color nameColor = selected ? RecetappThemeColors.onPrimary : RecetappThemeColors.textPrimary;
-    final Color subtitleColor = selected ? RecetappThemeColors.onPrimary.withValues(alpha: 0.85) : RecetappThemeColors.darkGreen.withValues(alpha: 0.5);
+    final BorderRadius borderRadius = BorderRadius.circular(10.r);
 
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        decoration: BoxDecoration(
-          color: selected ? RecetappThemeColors.primary : Colors.white,
-          border: Border.all(color: selected ? RecetappThemeColors.primary : RecetappThemeColors.mint),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(name, style: RecetappTextStyles.body1Bold.copyWith(color: nameColor)),
-                  const SizedBox(height: 4),
-                  Text(subtitle, style: RecetappTextStyles.body2.copyWith(color: subtitleColor)),
-                ],
+    return Material(
+      color: selected ? RecetappThemeColors.primary : Colors.white,
+      borderRadius: borderRadius,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: borderRadius,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+          foregroundDecoration: selected
+              ? null
+              : BoxDecoration(
+                  border: Border.all(color: RecetappThemeColors.mint),
+                  borderRadius: borderRadius,
+                ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: RecetappTextStyles.formLabel.copyWith(
+                        color: selected ? RecetappThemeColors.onPrimary : RecetappThemeColors.darkGreen,
+                      ),
+                    ),
+                    SizedBox(height: 2.h),
+                    Text(
+                      subtitle,
+                      style: RecetappTextStyles.body2.copyWith(
+                        color: selected ? RecetappThemeColors.onPrimary : RecetappThemeColors.dustyGray,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Icon(Icons.chevron_right_rounded, color: nameColor),
-          ],
+              SizedBox(width: 12.w),
+              RecetappStrokeIcon(
+                asset: selected ? RecetappIcons.chevronRightWhiteIcon : RecetappIcons.chevronRightGreyIcon,
+                width: 6,
+                height: 12,
+                bleed: const Offset(0.8, 0.8),
+              ),
+            ],
+          ),
         ),
       ),
     );

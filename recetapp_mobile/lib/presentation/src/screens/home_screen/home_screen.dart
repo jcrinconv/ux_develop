@@ -19,12 +19,24 @@ class _HomeScreenState extends State<HomeScreen> {
   final navigationService = locator<NavigationService>();
   final _scheduledMedications = locator<ScheduledMedicationsStore>();
 
+  static const _profiles = [
+    RecetappProfileOption(name: 'Juan', subtitle: 'Persona · activo'),
+    RecetappProfileOption(name: 'Lulo', subtitle: 'Mascota · 1 tratamiento'),
+    RecetappProfileOption(name: 'Federico', subtitle: 'Persona · sin tratamientos'),
+  ];
+  String _profileName = _profiles.first.name;
+
+  Future<void> _selectProfile() async {
+    final profile = await showSelectProfileDialog(context, profiles: _profiles, selectedName: _profileName);
+    if (profile != null) setState(() => _profileName = profile.name);
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: RecetappHomeTopBar(profileName: 'Juan', onNotificationsTap: () {}),
+        appBar: RecetappHomeTopBar(profileName: _profileName, onProfileTap: _selectProfile, onNotificationsTap: () {}),
         bottomNavigationBar: RecetappBottomNav(
           items: [
             RecetappBottomNavItemData(iconPath: RecetappIcons.packageIcon, label: 'Tratamientos'),
