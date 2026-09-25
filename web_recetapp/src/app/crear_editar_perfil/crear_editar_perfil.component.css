@@ -6,7 +6,13 @@
   position: relative;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 52px 73px 97px 350px;
+  padding-top: 52px;
+  padding-bottom: 97px;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
 }
 
 app-logo {
@@ -114,9 +120,9 @@ app-logo {
 }
 
 /* Responsive */
-@media (max-width: 640px) {
+@media (max-width: 840px) {
   .main {
-    padding: 32px 16px 48px;
+    padding: 52px 50px;
   }
 
   app-logo {
